@@ -27,6 +27,7 @@ export default defineComponent({
       const route = useRoute()
       const currentId = +route.params.id
       const column = testData.find(c => c.id === currentId)
+      console.log(column)
       const list = postList.filter(post => post.columnId === currentId)
       return {
          column,

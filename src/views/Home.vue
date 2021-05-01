@@ -22,17 +22,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
+import { GlobalDataProps } from '../store'
 import columnList from '../components/columnList.vue'
-import { testData, ColumnProps } from '../testData'
 export default defineComponent({
     components: {
         columnList
     },
     setup () {
-        const rawList:ColumnProps[] = testData
+      const store = useStore<GlobalDataProps>()
+      const list = computed(() => store.state.columns)
         return {
-            list: rawList
+            list
         }
     }
 })

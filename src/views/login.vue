@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import valadateInput, { RulesProp } from '../components/valadateInput.vue'
 import valadateForm from '../components/valadateForm.vue'
@@ -39,6 +40,7 @@ export default defineComponent({
         valadateForm
     },
     setup () {
+        const store = useStore()
         const inputRef = ref<any>()
         const emailVal = ref('')
         const passwordVal = ref('')
@@ -60,14 +62,9 @@ export default defineComponent({
             }
         ]
         const onFromSubmit = (result:boolean) => {
-            console.log(result + ',result')
             if (result) {
-                router.push({
-                    name: 'column',
-                    params: {
-                        id: 1
-                    }
-                })
+                router.push('/')
+                store.commit('login')
             }
         }
         const emailRef = reactive({

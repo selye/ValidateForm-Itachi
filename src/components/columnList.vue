@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { ColumnProps } from '../testData'
+import { ColumnProps, testData } from '../testData'
 export default defineComponent({
     name: 'columnList',
     props: {
@@ -25,9 +25,9 @@ export default defineComponent({
         }
     },
     setup(props) {
+        const myTest = testData
         //  map的作用的是每次遍历就会得到一个值，而不是在遍历完之后才得到值  所以需要return column
         const columnList = computed(() => {
-            console.log(props.list)
             return props.list.map(column => {
                 if (!column.avatar) {
                     column.avatar = require('@/assets/didala.png')
@@ -35,6 +35,7 @@ export default defineComponent({
                 return column
             })
         })
+        console.log(myTest)
         return {
             columnList
         }
