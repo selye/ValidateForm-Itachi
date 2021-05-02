@@ -64,5 +64,12 @@ export const postList:PostProps[] = [
      image: 'https://vue-maker.oss-cn-hangzhou.aliyuncs.com/vue-marker/5edcc2329f2b4e28352b75eb.jpg?x-oss-process=image/resize,m_fill,m_pad,w_200,h_110',
      createdAt: '2020-06-11 10:34:22',
      columnId: 3
+    },
+    {
+    id: 4,
+    title: '这是我的第4篇文章',
+    content: '"this is a new post you Very often we will need to map routes with the given pattern to the same component. For example we may have a User component which should be rendered for all users but with dif..."',
+    createdAt: '2020-06-11 10:34:22',
+    columnId: 4
     }
 ]
