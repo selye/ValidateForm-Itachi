@@ -16,9 +16,9 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { postList } from '../testData'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
-import { testData, postList } from '../testData'
 import MypostList from '../components/postList.vue'
 
 export default defineComponent({
@@ -30,6 +30,7 @@ export default defineComponent({
       const route = useRoute()
       const store = useStore<GlobalDataProps>()
       const currentId = +route.params.id
+      console.log(postList)
       const column = computed(() => store.getters.getColumnById(currentId))
       const list = computed(() => store.getters.getPostById(currentId))
       return {

@@ -15,6 +15,11 @@ const routes = [
         path: '/column/:id',
         name: 'column',
         component: () => import(/* webpackChunkName: 'ImportFuncDemo' */ '../views/ColumnDetail.vue')
+    },
+    {
+        path: '/createPost',
+        name: 'createPost',
+        component: () => import(/* webpackChunkName: 'ImportFuncDemo' */ '../views/createPost.vue')
     }
 ]
 const routerHistory = createWebHistory()
