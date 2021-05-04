@@ -46,7 +46,6 @@ export default defineComponent({
     },
     inheritAttrs: false,
     setup(props, context) {
-        console.log(props.tag)
         const inputRef = reactive({
             val: props.modelValue || '',
             error: false,

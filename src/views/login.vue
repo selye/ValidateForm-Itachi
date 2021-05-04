@@ -21,7 +21,7 @@
                  </valadate-Input>
         </div>
         <template #submit>
-            <button type="submit" class="btn btn-danger">提交</button>
+            <button type="submit" class="btn btn-danger">登录</button>
         </template>
     </valadate-Form>
   </div>

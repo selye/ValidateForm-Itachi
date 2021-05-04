@@ -33,6 +33,7 @@ export default defineComponent({
     },
     setup () {
       const store = useStore<GlobalDataProps>()
+      console.log(store.state.user.isLogin + '是否登录')
       const list = computed(() => store.state.columns)
       const biggerColumnLen = computed(() => store.getters.biggerColumnLen)
         return {

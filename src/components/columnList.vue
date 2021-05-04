@@ -35,7 +35,6 @@ export default defineComponent({
                 return column
             })
         })
-        console.log(myTest)
         return {
             columnList
         }
