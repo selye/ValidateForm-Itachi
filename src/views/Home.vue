@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
 import columnList from '../components/columnList.vue'
@@ -33,12 +33,12 @@ export default defineComponent({
     },
     setup () {
       const store = useStore<GlobalDataProps>()
-      console.log(store.state.user.isLogin + '是否登录')
       const list = computed(() => store.state.columns)
-      const biggerColumnLen = computed(() => store.getters.biggerColumnLen)
+      onMounted(() => {
+        store.dispatch('fetchColumns')
+      })
         return {
-            list,
-            biggerColumnLen
+            list
         }
     }
 })
