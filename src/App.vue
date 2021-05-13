@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <globalHeader :user="currentUser"></globalHeader>
+    <h1 v-if="isLoading">加载中 ~~~</h1>
     <router-view></router-view>
     <footer class="text-center py-4 text-secondary bg-light mt-6">
       <small>
@@ -30,7 +31,9 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const currentUser = computed(() => store.state.user)
+    const isLoading = computed(() => store.state.isLoading)
     return {
+      isLoading,
       currentUser
     }
   }

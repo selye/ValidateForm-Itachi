@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore, Commit } from 'vuex'
 import axios from 'axios'
 
 interface UserProps {
@@ -30,14 +30,19 @@ export interface PostProps {
     createdAt: string
     column?: string
 }
-
+const getAndcomit = async (url: string, mutationName: string, commit: Commit) => {
+    const { data } = await axios.get(url)
+    commit(mutationName, data)
+}
 export interface GlobalDataProps {
     columns: ColumnProps[]
     posts: PostProps[]
-    user: UserProps
+    user: UserProps,
+    isLoading: boolean
 }
 const store = createStore<GlobalDataProps>({
     state: {
+        isLoading: false,
         columns: [],
         posts: [],
         user: {
@@ -62,23 +67,20 @@ const store = createStore<GlobalDataProps>({
         },
         fetchPosts(state, rawData) {
             state.posts = rawData.data.list
+        },
+        setLoading(state, statu) {
+            state.isLoading = statu
         }
     },
     actions: {
-        fetchColumns(context) {
-            axios.get('/columns').then(response => {
-                context.commit('fetchColumns', response.data)
-            })
+        fetchColumns({ commit }) {
+            getAndcomit('/columns', 'fetchColumns', commit)
         },
         fetchColumn({ commit }, cid) {
-            axios.get(`columns/${cid}`).then(response => {
-                commit('fetchColumn', response.data)
-            })
+            getAndcomit(`columns/${cid}`, 'fetchColumn', commit)
         },
         fetchPosts({ commit }, cid) {
-            axios.get(`columns/${cid}/posts`).then(response => {
-                commit('fetchPosts', response.data)
-            })
+            getAndcomit(`columns/${cid}/posts`, 'fetchPosts', commit)
         }
     },
     getters: {
