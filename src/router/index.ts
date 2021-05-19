@@ -35,7 +35,6 @@ const router = createRouter({
     routes: routes
 })
 router.beforeEach((to, from, next) => {
-    console.log(to.meta)
     if (to.meta.requiredLogin && !store.state.user.isLogin) {
         next({ name: 'login' })
     } else if (to.meta.requiredDirectiveLogin && store.state.user.isLogin) {

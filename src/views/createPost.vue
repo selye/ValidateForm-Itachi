@@ -33,8 +33,7 @@
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { GlobalDataProps } from '../store'
-import { PostProps } from '../testData'
+import { GlobalDataProps, PostProps } from '../store'
 import valadateForm from '../components/valadateForm.vue'
 import valadateInput, { RulesProp } from '../components/valadateInput.vue'
 export default defineComponent({
@@ -62,20 +61,20 @@ export default defineComponent({
         const store = useStore<GlobalDataProps>()
         const onFromSubmit = (result: boolean) => {
             if (result) {
-                const { columnId } = store.state.user
-                if (columnId) {
+                const { column } = store.state.user
+                if (column) {
                     const newPost:PostProps = {
-                        id: new Date().getTime(),
+                        _id: new Date().getTime() + '',
                         title: titlelVal.value,
                         content: contentVal.value,
                         createdAt: new Date().toLocaleString(),
-                        columnId
+                        column
                     }
                     store.commit('createPost', newPost)
                     router.push({
                         name: 'column',
                         params: {
-                            id: columnId
+                            id: column
                         }
                     })
                 }

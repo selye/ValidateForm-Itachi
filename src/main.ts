@@ -20,14 +20,11 @@ axios.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     setTimeout(() => {
         store.commit('setLoading', false)
-    }, 3000)
+    }, 2000)
     return response
   }, function (error) {
     // 对响应错误做点什么
     return Promise.reject(error)
   })
-axios.get('columns').then(response => {
-    console.log(response.data)
-})
 const app = createApp(App)
 app.use(router).use(store).mount('#app')
