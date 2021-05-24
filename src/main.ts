@@ -22,8 +22,11 @@ axios.interceptors.response.use(function (response) {
         store.commit('setLoading', false)
     }, 2000)
     return response
-  }, function (error) {
-    // 对响应错误做点什么
+  }, e => {
+    console.log(e.response)
+    const { error } = e.response.data
+    store.commit('setError', { status: true, message: error })
+    store.commit('setLoading', false)
     return Promise.reject(error)
   })
 const app = createApp(App)

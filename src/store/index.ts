@@ -40,16 +40,25 @@ const postAndCommit = async(url: string, mutationName: string, commit: Commit, p
     commit(mutationName, data)
     return data
 }
+
+interface GlobalErrorProps {
+    status: boolean
+    message?: string
+}
+
 export interface GlobalDataProps {
+    error: GlobalErrorProps
     token:string
     columns: ColumnProps[]
     posts: PostProps[]
     user: UserProps,
     isLoading: boolean
 }
+
 const store = createStore<GlobalDataProps>({
     state: {
-        token: '',
+        error: { status: false },
+        token: localStorage.getItem('token') || '',
         isLoading: false,
         columns: [],
         posts: [],
@@ -58,6 +67,9 @@ const store = createStore<GlobalDataProps>({
         }
     },
     mutations: {
+        setError(state, e:GlobalErrorProps) {
+            state.error = e
+        },
         createPost(state, newPost) {
             state.posts.push(newPost)
         },
@@ -76,6 +88,7 @@ const store = createStore<GlobalDataProps>({
         login(state, rawData) {
             const { token } = rawData.data
             state.token = token
+            localStorage.setItem('token', state.token)
             axios.defaults.headers.common.Authorization = `Bearer ${token}`
         },
         fetchCurrentUser(state, rawData) {
