@@ -33,6 +33,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import valadateInput, { RulesProp } from '../components/valadateInput.vue'
 import valadateForm from '../components/valadateForm.vue'
+import createMessage from '../hooks/crreateMessage'
 export default defineComponent({
     name: 'login',
     components: {
@@ -68,10 +69,12 @@ export default defineComponent({
                     password: passwordVal.value
                 }
                 store.dispatch('loginAndFetch', payload).then(data => {
-                    console.log(data)
-                    router.push('/')
+                    createMessage('登陆成功', 'success')
+                    setTimeout(() => {
+                        router.push('/')
+                    }, 2000)
                 }).catch(e => {
-                    console.log(e)
+                    console.log('错误了')
                 })
             }
         }

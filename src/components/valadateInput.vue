@@ -29,7 +29,8 @@ import { defineComponent, PropType, reactive, onMounted } from 'vue'
 import { emitter } from './valadateForm.vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 interface RuleProp {
-    type: 'required' | 'email'
+    type: 'required' | 'email' | 'custom'
+    validator?: () => boolean
     message: string
 }
 export type RulesProp = RuleProp[]
@@ -71,6 +72,8 @@ export default defineComponent({
                             break
                         default:
                             break
+                        case 'custom':
+                            passed = rule.validator ? rule.validator() : true
                     }
                     return passed
                 })

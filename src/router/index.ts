@@ -26,6 +26,11 @@ const routes = [
         meta: {
             requiredLogin: true
         }
+    },
+    {
+        path: '/signUp',
+        name: 'signUp',
+        component: () => import(/* webpackChunkName: 'ImportFuncDemo' */ '../views/signUp.vue')
     }
 ]
 const routerHistory = createWebHistory()

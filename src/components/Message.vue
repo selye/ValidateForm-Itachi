@@ -3,7 +3,7 @@
     <div class="alert message-info fixed-top w-50 mx-auto d-flex justify-content-between mt-2"
     :class="classObject" v-if="isVisible"
     >
-        <span>{{messge}}</span>
+        <span>{{message}}</span>
         <button type="button" class="btn-close" aria-label="Close" @click.prevent="hide"></button>
     </div>
 </teleport>
@@ -16,7 +16,7 @@ export type MessageType = 'success' | 'error' | 'default'
 export default defineComponent({
     name: 'message',
     props: {
-        messge: String,
+        message: String,
         type: {
             type: String as PropType<MessageType>
         }
