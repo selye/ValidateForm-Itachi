@@ -112,7 +112,7 @@ export default defineComponent({
                     password: formData.password
                 }
                 axios.post('/users', payload).then(res => {
-                    createMessage('登陆成功', 'success')
+                    createMessage('注册成功', 'success')
                      setTimeout(() => {
                         router.push('/')
                     }, 2000)

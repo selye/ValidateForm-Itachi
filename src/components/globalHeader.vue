@@ -9,7 +9,7 @@
         <dropDown :title="`你好 ${user.nickName}`">
             <dropDownItem ><router-link to="/createPost" class="dropdown-item">新建文章</router-link></dropDownItem>
             <dropDownItem disabled><a href="#" class="dropdown-item">编辑资料</a></dropDownItem>
-            <dropDownItem><a href="#" class="dropdown-item">退出登录</a></dropDownItem>
+            <dropDownItem><a href="#" @click.prevent="logOut" class="dropdown-item">退出登录</a></dropDownItem>
         </dropDown>
      </ul>
  </nav>
@@ -19,8 +19,9 @@
 import { defineComponent, PropType } from 'vue'
 import dropDown from './dropDown.vue'
 import dropDownItem from './dropDownItem.vue'
-import { UserProps } from '../store'
-
+import store, { UserProps } from '../store'
+import { useStore } from 'vuex'
+import createMessage from '../hooks/crreateMessage'
 export default defineComponent({
     name: 'globalHeader',
     components: {
@@ -32,7 +33,18 @@ export default defineComponent({
             type: Object as PropType<UserProps>,
             required: true
         }
+    },
+    setup () {
+        const store = useStore()
+        const logOut = () => {
+            store.commit('logOut')
+            createMessage('退出成功', 'success')
+        }
+        return {
+            logOut
+        }
     }
+
 })
 </script>
 
