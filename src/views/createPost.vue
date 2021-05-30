@@ -1,6 +1,7 @@
 <template>
   <div class="create-post-page">
       <h4>新建文章</h4>
+      <input type="file" name="file" @change.prevent="handleFileChange">
       <valadate-form class="needs-validation" @form-submit="onFromSubmit">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">文章标题</label>
@@ -32,6 +33,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
+import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { GlobalDataProps, PostProps } from '../store'
 import valadateForm from '../components/valadateForm.vue'
@@ -80,12 +82,29 @@ export default defineComponent({
                 }
             }
         }
+        const handleFileChange = (e: Event) => {
+            const target = e.target as HTMLInputElement
+            const files = target.files
+            if (files) {
+                const uploadedFile = files[0]
+                const formData = new FormData()
+                formData.append(uploadedFile.name, uploadedFile)
+                axios.post('upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(res => {
+                    console.log(res)
+                })
+            }
+        }
         return {
             titleRules,
             contentRules,
             titlelVal,
             contentVal,
-            onFromSubmit
+            onFromSubmit,
+            handleFileChange
         }
     }
 })
