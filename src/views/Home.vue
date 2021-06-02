@@ -11,6 +11,7 @@
         </div>
       </div>
     </section>
+    <uploader action = 'upload' :beforeUpload = 'beforeUpload' @file-uploaded = 'onFileLoaded'></uploader>
     <h4 class="font-weight-bold text-center">发现精彩</h4>
     <column-List :list="list"></column-List>
      <button
@@ -24,22 +25,37 @@
 <script lang="ts">
 import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
-import { GlobalDataProps } from '../store'
+import { GlobalDataProps, ResponseType, ImageProps } from '../store'
 import columnList from '../components/columnList.vue'
+import uploader from '../components/Uploader.vue'
+import createMessage from '../hooks/crreateMessage'
 export default defineComponent({
     components: {
-        columnList
+        columnList,
+        uploader
     },
     setup () {
       const store = useStore<GlobalDataProps>()
       const list = computed(() => store.state.columns)
       const isLoading = computed(() => store.state.isLoading)
+      const beforeUpload = (file: File) => {
+        const isJpg = file.type === 'image/jpeg'
+        if (!isJpg) {
+          createMessage('必须传入jpg格式', 'error')
+        }
+        return isJpg
+      }
+      const onFileLoaded = (rawData: ResponseType<ImageProps>) => {
+        createMessage(`图片id为${rawData.data._id}`, 'success')
+      }
       onMounted(() => {
         store.dispatch('fetchColumns')
       })
         return {
             isLoading,
-            list
+            list,
+            beforeUpload,
+            onFileLoaded
         }
     }
 })

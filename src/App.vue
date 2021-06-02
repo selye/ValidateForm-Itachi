@@ -48,7 +48,7 @@ export default defineComponent({
     })
     watch(() => error.value.status, () => {
       const { status, message } = error.value
-      console.log(message)
+      // console.log(message)
       if (status && message) {
         createMessage(message, 'error')
       }
