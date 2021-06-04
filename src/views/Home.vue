@@ -11,7 +11,16 @@
         </div>
       </div>
     </section>
-    <uploader action = 'upload' :beforeUpload = 'beforeUpload' @file-uploaded = 'onFileLoaded'></uploader>
+    <uploader action = 'upload' :beforeUpload = 'beforeUpload' @file-uploaded = 'onFileLoaded'>
+      <template #loading>
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </template>
+      <template #uploaded = "slotProps">
+        <img :src="slotProps.uploadedData.data.url" width="500">
+      </template>
+    </uploader>
     <h4 class="font-weight-bold text-center">发现精彩</h4>
     <column-List :list="list"></column-List>
      <button
