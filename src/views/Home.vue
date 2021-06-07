@@ -11,16 +11,6 @@
         </div>
       </div>
     </section>
-    <uploader action = 'upload' :beforeUpload = 'beforeUpload' @file-uploaded = 'onFileLoaded'>
-      <template #loading>
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </template>
-      <template #uploaded = "slotProps">
-        <img :src="slotProps.uploadedData.data.url" width="500">
-      </template>
-    </uploader>
     <h4 class="font-weight-bold text-center">发现精彩</h4>
     <column-List :list="list"></column-List>
      <button
@@ -36,12 +26,10 @@ import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps, ResponseType, ImageProps } from '../store'
 import columnList from '../components/columnList.vue'
-import uploader from '../components/Uploader.vue'
 import createMessage from '../hooks/crreateMessage'
 export default defineComponent({
     components: {
-        columnList,
-        uploader
+        columnList
     },
     setup () {
       const store = useStore<GlobalDataProps>()

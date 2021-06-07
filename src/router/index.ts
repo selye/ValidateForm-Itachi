@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store'
 const routes = [
@@ -40,12 +41,34 @@ const router = createRouter({
     routes: routes
 })
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiredLogin && !store.state.user.isLogin) {
-        next({ name: 'login' })
-    } else if (to.meta.requiredDirectiveLogin && store.state.user.isLogin) {
-        next('/')
+    const { user, token } = store.state
+    const { requiredLogin, requiredDirectiveLogin } = to.meta
+    if (!user.isLogin) {
+        if (token) {
+            axios.defaults.headers.common.Authorization = `Bearer ${token}`
+            store.dispatch('fetchCurrentUser').then(() => {
+                if (requiredDirectiveLogin) {
+                    next('/')
+                } else {
+                    next()
+                }
+            }).catch(e => {
+                console.log(e)
+                store.commit('logOut')
+            })
+        } else {
+            if (requiredLogin) {
+                next('/login')
+            } else {
+                next()
+            }
+        }
     } else {
-        next()
+        if (requiredDirectiveLogin) {
+            next('/')
+        } else {
+            next()
+        }
     }
 })
 

@@ -1,7 +1,22 @@
 <template>
   <div class="create-post-page">
-      <h4>新建文章</h4>
-      <input type="file" name="file" @change.prevent="handleFileChange">
+    <h4>新建文章</h4>
+    <uploader action = 'upload' :beforeUpload = 'beforeUpload' @file-uploaded = 'onFileLoaded'
+      class="d-flex align-items-center justify-content-center bg-light text-secondary w-100 my-4"
+    >
+        <h2>点击上传图片</h2>
+        <template #loading>
+            <div class="d-flex">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h2>正在上传</h2>
+            </div>
+        </template>
+        <template #uploaded = 'slotProps'>
+            <img :src="slotProps.uploadedData.data.url" >
+        </template>
+    </uploader>
       <valadate-form class="needs-validation" @form-submit="onFromSubmit">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">文章标题</label>
@@ -38,11 +53,13 @@ import { useRouter } from 'vue-router'
 import { GlobalDataProps, PostProps } from '../store'
 import valadateForm from '../components/valadateForm.vue'
 import valadateInput, { RulesProp } from '../components/valadateInput.vue'
+import uploader from '../components/Uploader.vue'
 export default defineComponent({
     name: 'createPost',
     components: {
         valadateInput,
-        valadateForm
+        valadateForm,
+        uploader
     },
     setup () {
         const titleRules:RulesProp = [
@@ -111,5 +128,13 @@ export default defineComponent({
 </script>
 
 <style>
-
+.create-post-page .file-upload-container{
+    height:200px;
+    cursor: pointer;
+}
+.create-post-page .file-upload-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 </style>
